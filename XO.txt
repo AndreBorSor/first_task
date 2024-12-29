@@ -1,0 +1,64 @@
+def vivod (pole):# Выврод массива - поля
+    for i in range(3):
+        for j in range(3):
+            print(pole[i][j], end = ' | ')
+        print(end="\n")
+
+def victoriy(pole): # Проверка на выигрыш
+  for rad in pole:# Ряды
+    if rad[0] == rad[1] == rad[2]:
+      return True
+  for sto in range(3): # Столбы
+    if pole[0][sto] == pole[1][sto] == pole[2][sto]:
+      return True
+  if pole[0][0] == pole[1][1] == pole[2][2]:# Диаг
+    return True
+  if pole[0][2] == pole[1][1] == pole[2][0]:
+    return True
+  return None
+
+#  Основной код
+pole_g = [[0 for _ in range(3)] for _ in range(3) ]#Создаём массив
+f = 0
+for i in range(3):# Заполняем массив
+    for j in range(3):
+        f+=1
+        pole_g[i][j] = f
+
+hod = 0
+xo = 'X'
+igr_ind = 0
+vivod(pole_g)
+while int(hod) != 99:
+
+    if igr_ind %2 == 0:
+        xo = 'X'
+    else:
+        xo = 'O'
+    print('Введите номер ячейки с  1 до 9, для выхода любой символ: ')
+    hod = input(f'     Ход игрока {xo} - ')
+    if not hod.isdigit():
+        if hod == "Q" or "q":
+            print("Окончание игры")
+            break
+        #else:
+            #print("Неверный ход. Это символ")
+           # continue
+
+    flag = False
+    for i in range(3):
+        for j in range (3):
+            if int(hod) == pole_g[i][j]:
+                pole_g[i][j] = xo
+                flag = True
+    if flag == False:
+        print ('Неверный ход. Поле либо занято, либо введен неверный символ')
+        continue
+    igr_ind +=1
+    vivod(pole_g)
+    if victoriy(pole_g):
+        print(f' Выиграл игрок {xo} !!!')
+        break
+    if igr_ind == 9:
+        print(f"Закончились поля. Ничья !!!")
+        break
